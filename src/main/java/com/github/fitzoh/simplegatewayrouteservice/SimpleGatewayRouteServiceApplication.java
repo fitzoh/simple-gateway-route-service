@@ -23,7 +23,7 @@ public class SimpleGatewayRouteServiceApplication {
 
 
     @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder, SimpleLoggingFilter loggingFilter) {
         return builder.routes()
                 .route(r ->
                         r.header(FORWARDED_URL, ".*")
@@ -31,6 +31,7 @@ public class SimpleGatewayRouteServiceApplication {
                                 .header(PROXY_METADATA, ".*")
                                 .and()
                                 .header(PROXY_SIGNATURE, ".*")
+                                .filters(f -> f.add(loggingFilter))
                                 .uri("http://google.com:80"))
                 .build();
     }
