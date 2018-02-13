@@ -6,8 +6,6 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
-import static org.springframework.cloud.gateway.filter.RouteToRequestUrlFilter.ROUTE_TO_URL_FILTER_ORDER;
-
 @SpringBootApplication
 public class SimpleGatewayRouteServiceApplication {
 
@@ -37,7 +35,7 @@ public class SimpleGatewayRouteServiceApplication {
                                 .header(PROXY_SIGNATURE, ".*")
                                 .filters(f -> {
                                     f.filter(loggingFilter);
-                                    f.filter(forwardingFilter, ROUTE_TO_URL_FILTER_ORDER + 1);
+                                    f.filter(forwardingFilter);
                                     return f;
                                 })
                                 .uri("http://google.com:80"))
